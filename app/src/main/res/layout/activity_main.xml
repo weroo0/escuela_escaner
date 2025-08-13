@@ -1,48 +1,59 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:padding="16dp">
+    android:padding="16dp"
+    android:background="#FFFFFF">
 
+    <!-- Espacio superior para logos -->
+    <LinearLayout
+        android:id="@+id/contenedorLogos"
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="center">
+
+        <!-- Aquí irán los logos -->
+        <ImageView
+            android:id="@+id/logoEscuela"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/ic_launcher_foreground"
+            android:contentDescription="Logo Escuela"
+            android:adjustViewBounds="true" />
+
+    </LinearLayout>
+
+    <!-- Contenedor para los botones -->
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:orientation="horizontal"
-        android:gravity="center_vertical">
-
-        <EditText
-            android:id="@+id/inputBusqueda"
-            android:layout_width="0dp"
-            android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:hint="Ingresa ID o nombre"
-            android:inputType="text" />
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="vertical"
+        android:gravity="top|center_horizontal">
 
         <Button
             android:id="@+id/btnCamara"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
+            android:backgroundTint="@android:color/holo_blue_light"
             android:text="Escanear con cámara"
-            android:layout_marginStart="8dp" />
+            android:textColor="@android:color/white"
+            android:textSize="18sp"
+            android:layout_marginBottom="20dp" />
 
         <Button
             android:id="@+id/btnEscaner"
-            android:layout_width="wrap_content"
+            android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:text="Escanear con escáner"
-            android:layout_marginStart="8dp" />
-    </LinearLayout>
+            android:textColor="@android:color/white"
+            android:backgroundTint="@android:color/holo_blue_light"
+            android:textSize="18sp" />
 
-    <TextView
-        android:id="@+id/tvResultado"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text=""
-        android:textSize="18sp"
-        android:textColor="#000"
-        android:layout_marginTop="20dp"
-        android:gravity="center" />
+
+    </LinearLayout>
 
 </LinearLayout>

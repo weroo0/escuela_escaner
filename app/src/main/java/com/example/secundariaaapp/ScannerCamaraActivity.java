@@ -15,6 +15,7 @@ import android.content.pm.PackageManager;
 import android.media.Image;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.Button;
 import android.widget.TextView;
 
 import com.google.common.util.concurrent.ListenableFuture;
@@ -59,6 +60,10 @@ public class ScannerCamaraActivity extends AppCompatActivity {
 
         previewView = findViewById(R.id.previewView);
         tvResult = findViewById(R.id.tvResult);
+
+        Button btnVolver = findViewById(R.id.btnVolver);
+        btnVolver.setOnClickListener(v -> finish());
+
 
         // pedir permiso si hace falta
         if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA)
