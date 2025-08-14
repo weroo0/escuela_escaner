@@ -1,3 +1,11 @@
 <resources>
     <string name="app_name">SecundariaaApp</string>
+    <string name="titulo_busqueda">Registro de Asistencia</string>
+    <string name="hint_busqueda">Ingresa el número del alumno</string>
+    <string name="btn_buscar">Registrar</string>
+    <string name="btn_volver">Volver al Menú Principal</string>
+    <string name="mensaje_vacio">Por favor ingresa un código</string>
+    <string name="asistencia_registrada">Asistencia registrada</string>
+    <string name="primer_registro">Asistencia registrada %s</string>
+    <string name="codigo_no_existe">No existe el código del alumno</string>
 </resources>

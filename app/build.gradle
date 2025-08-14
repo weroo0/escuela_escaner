@@ -24,7 +24,6 @@ android {
         }
     }
 
-
     compileOptions {
         sourceCompatibility JavaVersion.VERSION_1_8
         targetCompatibility JavaVersion.VERSION_1_8
@@ -58,5 +57,7 @@ dependencies {
     // Gson para leer JSON
     implementation 'com.google.code.gson:gson:2.13.1'
 
+    // Material Design Components
+    implementation 'com.google.android.material:material:1.12.0'
 
 }

@@ -38,6 +38,7 @@ import java.util.concurrent.ExecutionException;
 import java.util.concurrent.Executor;
 
 
+
 @ExperimentalGetImage
 public class ScannerCamaraActivity extends AppCompatActivity {
 
