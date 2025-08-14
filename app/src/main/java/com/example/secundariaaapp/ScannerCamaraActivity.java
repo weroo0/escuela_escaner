@@ -12,8 +12,12 @@ import androidx.core.content.ContextCompat;
 
 import android.Manifest;
 import android.content.pm.PackageManager;
+import android.media.AudioManager;
 import android.media.Image;
+import android.media.MediaPlayer;
+import android.media.ToneGenerator;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
 import android.widget.TextView;
@@ -52,10 +56,21 @@ public class ScannerCamaraActivity extends AppCompatActivity {
     private long lastScanTime = 0L;
     private static final long SCAN_COOLDOWN_MS = 2000; // 2s
 
+    private MediaPlayer soundError;
+    private MediaPlayer soundSuccess;
+
+    private final Handler handler = new Handler();
+    private Runnable resetTextRunnable;
+
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_scanner_camara);
+        soundError = MediaPlayer.create(this, R.raw.error);
+        soundSuccess = MediaPlayer.create(this, R.raw.success);
+
 
 
         previewView = findViewById(R.id.previewView);
@@ -179,14 +194,41 @@ public class ScannerCamaraActivity extends AppCompatActivity {
             final String finalId = id;
 
             runOnUiThread(() -> {
-                if (finalEncontrado) {
-                    tvResult.setText("Bienvenido: " + finalNombre);
-                } else {
-                    tvResult.setText("ID no encontrado: " + finalId);
+
+                if (resetTextRunnable != null) {
+                    handler.removeCallbacks(resetTextRunnable);
                 }
+
+
+                if (finalEncontrado) {
+                    tvResult.setText("✅ Asistencia registrada correctamente.");
+                    soundSuccess = MediaPlayer.create(this, R.raw.success);
+                    playSound(soundSuccess, R.raw.success);
+                } else {
+                    tvResult.setText("❌ No existe el código del alumno.");
+                    soundError = MediaPlayer.create(this, R.raw.error);
+                    playSound(soundError, R.raw.error);
+                }
+
+                // Crear un nuevo Runnable para resetear el texto
+                resetTextRunnable = () -> tvResult.setText("Esperando escaneo...");
+                handler.postDelayed(resetTextRunnable, 1500);
             });
+
         }
     }
+
+    private void playSound(MediaPlayer sound, int resId) {
+        if (sound != null) {
+            if (sound.isPlaying()) {
+                sound.stop();
+                sound.release();
+            }
+        }
+        sound = MediaPlayer.create(this, resId);
+        sound.start();
+    }
+
 
     // manejar respuesta del permiso
     @Override
@@ -203,4 +245,18 @@ public class ScannerCamaraActivity extends AppCompatActivity {
             }
         }
     }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if (soundSuccess != null) {
+            soundSuccess.release();
+            soundSuccess = null;
+        }
+        if (soundError != null) {
+            soundError.release();
+            soundError = null;
+        }
+    }
+
 }
