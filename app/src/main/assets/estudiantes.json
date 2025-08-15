@@ -1,5 +1,12 @@
 [
-  {"id": "12345", "nombre": "Juan Pérez"},
-  {"id": "67890", "nombre": "Ana López"},
-  {"id": "54321", "nombre": "Carlos Ramírez"}
+  {"id": "12345", "nombre": "Juan Pérez", "yaRegistrado": false},
+  {"id": "67890", "nombre": "Ana López", "yaRegistrado": false},
+  {"id": "54321", "nombre": "Carlos Ramírez", "yaRegistrado": false},
+  {"id": "98765", "nombre": "María González", "yaRegistrado": false},
+  {"id": "45678", "nombre": "Luis Martínez", "yaRegistrado": false},
+  {"id": "23456", "nombre": "Carmen Rodríguez", "yaRegistrado": false},
+  {"id": "78901", "nombre": "Roberto Silva", "yaRegistrado": false},
+  {"id": "34567", "nombre": "Patricia Torres", "yaRegistrado": false},
+  {"id": "89012", "nombre": "Fernando Herrera", "yaRegistrado": false},
+  {"id": "56789", "nombre": "Isabel Vargas", "yaRegistrado": false}
 ]
