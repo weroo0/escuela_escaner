@@ -63,6 +63,17 @@ public class ScannerCamaraActivity extends AppCompatActivity {
     private final Handler handler = new Handler();
     private Runnable resetTextRunnable;
 
+    private boolean yaRegistrado;
+
+    public boolean isYaRegistrado() {
+        return yaRegistrado;
+    }
+
+    public void setYaRegistrado(boolean yaRegistrado) {
+        this.yaRegistrado = yaRegistrado;
+    }
+
+
 
 
     @Override
@@ -173,51 +184,48 @@ public class ScannerCamaraActivity extends AppCompatActivity {
 
             long now = System.currentTimeMillis();
             if (id.equals(lastScannedId) && (now - lastScanTime) < SCAN_COOLDOWN_MS) {
-                // ignora lectura repetida en el cooldown
-                continue;
+                continue; // Ignora lectura repetida en cooldown
             }
 
             lastScannedId = id;
             lastScanTime = now;
 
-            boolean encontrado = false;
-            String nombre = null;
-            for (Estudiante e : listaEstudiantes) {
-                if (id.equals(e.getId())) {
-                    encontrado = true;
-                    nombre = e.getNombre();
-                    break;
-                }
-            }
-
-            final boolean finalEncontrado = encontrado;
-            final String finalNombre = nombre;
-            final String finalId = id;
+            Estudiante estudiante = buscarEstudiantePorId(id);
 
             runOnUiThread(() -> {
-
                 if (resetTextRunnable != null) {
                     handler.removeCallbacks(resetTextRunnable);
                 }
 
-
-                if (finalEncontrado) {
-                    tvResult.setText("✅ Asistencia registrada correctamente.");
-                    soundSuccess = MediaPlayer.create(this, R.raw.success);
-                    playSound(soundSuccess, R.raw.success);
-                } else {
+                if (estudiante == null) {
                     tvResult.setText("❌ No existe el código del alumno.");
-                    soundError = MediaPlayer.create(this, R.raw.error);
                     playSound(soundError, R.raw.error);
+                } else {
+                    if (estudiante.isYaRegistrado()) {
+                        tvResult.setText("⚠️ Asistencia ya registrada");
+                        playSound(soundSuccess, R.raw.success);
+                    } else {
+                        estudiante.setYaRegistrado(true);
+                        tvResult.setText("✅ Asistencia registrada: " + estudiante.getNombre());
+                        playSound(soundSuccess, R.raw.success);
+                    }
                 }
 
-                // Crear un nuevo Runnable para resetear el texto
                 resetTextRunnable = () -> tvResult.setText("Esperando escaneo...");
                 handler.postDelayed(resetTextRunnable, 1500);
             });
-
         }
     }
+
+    private Estudiante buscarEstudiantePorId(String id) {
+        for (Estudiante estudiante : listaEstudiantes) {
+            if (estudiante.getId().equals(id)) {
+                return estudiante;
+            }
+        }
+        return null;
+    }
+
 
     private void playSound(MediaPlayer sound, int resId) {
         if (sound != null) {

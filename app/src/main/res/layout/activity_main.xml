@@ -39,7 +39,7 @@
             android:layout_width="200dp"
             android:layout_height="wrap_content"
             android:backgroundTint="@android:color/holo_blue_light"
-            android:text="Escanear con cámara"
+            android:text="Cámara"
             android:textColor="@android:color/white"
             android:textSize="18sp"
             android:layout_marginBottom="20dp" />
@@ -48,7 +48,7 @@
             android:id="@+id/btnEscaner"
             android:layout_width="200dp"
             android:layout_height="wrap_content"
-            android:text="Escanear con escáner"
+            android:text="Escáner"
             android:textColor="@android:color/white"
             android:backgroundTint="@android:color/holo_blue_light"
             android:textSize="18sp" />

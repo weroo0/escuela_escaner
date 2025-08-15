@@ -85,7 +85,8 @@
                     android:layout_height="wrap_content"
                     android:inputType="number"
                     android:maxLines="1"
-                    android:textSize="18sp" />
+                    android:textSize="18sp"
+                    android:textColor="@color/primary_dark"/>
 
             </com.google.android.material.textfield.TextInputLayout>
 
@@ -96,9 +97,10 @@
                 android:layout_height="60dp"
                 android:text="@string/btn_buscar"
                 android:textSize="18sp"
+                android:textColor="@android:color/white"
                 android:textStyle="bold"
                 app:cornerRadius="15dp"
-                app:backgroundTint="@color/primary_blue"
+                android:backgroundTint="@android:color/holo_blue_light"
                 app:rippleColor="@color/ripple_blue"
                 app:elevation="4dp" />
 
