@@ -5,13 +5,12 @@ import android.view.KeyEvent;
 import android.view.Gravity;
 import android.view.View;
 import android.view.inputmethod.EditorInfo;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
-
 
 import com.google.android.material.textfield.TextInputEditText;
 import com.google.android.material.textfield.TextInputLayout;
@@ -30,7 +29,7 @@ public class ScannerExternoActivity extends AppCompatActivity {
     private TextInputLayout tilBusqueda;
     private TextInputEditText etBusqueda;
     private LinearLayout resultadosLayout;
-    private TextInputEditText etScanInput; // EditText invisible para el escáner
+    private EditText etScanInput; // Cambiado a EditText
 
     private List<Estudiante> listaEstudiantes = new ArrayList<>();
 
@@ -43,7 +42,7 @@ public class ScannerExternoActivity extends AppCompatActivity {
         tilBusqueda = findViewById(R.id.tilBusqueda);
         etBusqueda = findViewById(R.id.etBusqueda);
         resultadosLayout = findViewById(R.id.resultados_layout);
-        etScanInput = findViewById(R.id.etScanInput);
+        etScanInput = findViewById(R.id.etScanInput);  // Ahora EditText
 
         // Cargar estudiantes desde JSON
         cargarEstudiantesDesdeJson();
@@ -53,8 +52,8 @@ public class ScannerExternoActivity extends AppCompatActivity {
 
         // Configurar búsqueda al presionar Enter en el campo de búsqueda
         etBusqueda.setOnEditorActionListener((v, actionId, event) -> {
-            if (actionId == EditorInfo.IME_ACTION_SEARCH || 
-                (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
+            if (actionId == EditorInfo.IME_ACTION_SEARCH ||
+                    (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
                 registrarAsistencia();
                 return true;
             }
@@ -64,8 +63,8 @@ public class ScannerExternoActivity extends AppCompatActivity {
         // Configurar el EditText invisible para capturar input del escáner
         etScanInput.setOnEditorActionListener((v, actionId, event) -> {
             if (actionId == EditorInfo.IME_ACTION_DONE ||
-                (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
-                
+                    (event != null && event.getKeyCode() == KeyEvent.KEYCODE_ENTER && event.getAction() == KeyEvent.ACTION_DOWN)) {
+
                 String codigoEscaneado = etScanInput.getText().toString().trim();
                 if (!codigoEscaneado.isEmpty()) {
                     // Poner el código escaneado en el campo de búsqueda visible
@@ -113,7 +112,7 @@ public class ScannerExternoActivity extends AppCompatActivity {
 
     private void registrarAsistencia() {
         String codigoEstudiante = etBusqueda.getText().toString().trim();
-        
+
         if (codigoEstudiante.isEmpty()) {
             // Mostrar error simple
             tilBusqueda.setError("Por favor ingresa un código");
@@ -161,98 +160,84 @@ public class ScannerExternoActivity extends AppCompatActivity {
     }
 
     private void mostrarEstudianteNoEncontrado() {
-        // Crear contenedor para el resultado
         LinearLayout resultadoItem = new LinearLayout(this);
         resultadoItem.setOrientation(LinearLayout.HORIZONTAL);
         resultadoItem.setPadding(16, 16, 16, 16);
         resultadoItem.setBackgroundResource(R.drawable.item_resultado_background);
         resultadoItem.setLayoutParams(new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
         ));
 
-        // Icono X roja
         ImageView iconoX = new ImageView(this);
         iconoX.setImageResource(R.drawable.ic_x_red);
         iconoX.setLayoutParams(new LinearLayout.LayoutParams(48, 48));
         iconoX.setPadding(0, 0, 16, 0);
 
-        // Texto de error
         TextView tvError = new TextView(this);
         tvError.setText(getString(R.string.codigo_no_existe));
         tvError.setTextSize(18);
         tvError.setTextColor(getResources().getColor(android.R.color.holo_red_dark));
         tvError.setGravity(Gravity.CENTER_VERTICAL);
 
-        // Agregar vistas al contenedor
         resultadoItem.addView(iconoX);
         resultadoItem.addView(tvError);
 
-        // Agregar al contenedor de resultados
         resultadosLayout.addView(resultadoItem);
     }
 
     private void mostrarAsistenciaRegistrada() {
-        // Crear contenedor para el resultado
         LinearLayout resultadoItem = new LinearLayout(this);
         resultadoItem.setOrientation(LinearLayout.HORIZONTAL);
         resultadoItem.setPadding(16, 16, 16, 16);
         resultadoItem.setBackgroundResource(R.drawable.item_resultado_background);
         resultadoItem.setLayoutParams(new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
         ));
 
-        // Icono palomita verde
         ImageView iconoCheck = new ImageView(this);
         iconoCheck.setImageResource(R.drawable.ic_check_green);
         iconoCheck.setLayoutParams(new LinearLayout.LayoutParams(48, 48));
         iconoCheck.setPadding(0, 0, 16, 0);
 
-        // Texto de asistencia registrada
         TextView tvAsistencia = new TextView(this);
         tvAsistencia.setText(getString(R.string.asistencia_registrada));
         tvAsistencia.setTextSize(18);
         tvAsistencia.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         tvAsistencia.setGravity(Gravity.CENTER_VERTICAL);
 
-        // Agregar vistas al contenedor
         resultadoItem.addView(iconoCheck);
         resultadoItem.addView(tvAsistencia);
 
-        // Agregar al contenedor de resultados
         resultadosLayout.addView(resultadoItem);
     }
 
     private void mostrarPrimerRegistro(Estudiante estudiante) {
-        // Crear contenedor para el resultado
         LinearLayout resultadoItem = new LinearLayout(this);
         resultadoItem.setOrientation(LinearLayout.HORIZONTAL);
         resultadoItem.setPadding(16, 16, 16, 16);
         resultadoItem.setBackgroundResource(R.drawable.item_resultado_background);
         resultadoItem.setLayoutParams(new LinearLayout.LayoutParams(
-            LinearLayout.LayoutParams.MATCH_PARENT,
-            LinearLayout.LayoutParams.WRAP_CONTENT
+                LinearLayout.LayoutParams.MATCH_PARENT,
+                LinearLayout.LayoutParams.WRAP_CONTENT
         ));
 
-        // Icono palomita verde
         ImageView iconoCheck = new ImageView(this);
         iconoCheck.setImageResource(R.drawable.ic_check_green);
         iconoCheck.setLayoutParams(new LinearLayout.LayoutParams(48, 48));
         iconoCheck.setPadding(0, 0, 16, 0);
 
-        // Texto de primer registro
         TextView tvPrimerRegistro = new TextView(this);
         tvPrimerRegistro.setText(getString(R.string.primer_registro, estudiante.getPrimerNombre()));
         tvPrimerRegistro.setTextSize(18);
         tvPrimerRegistro.setTextColor(getResources().getColor(android.R.color.holo_green_dark));
         tvPrimerRegistro.setGravity(Gravity.CENTER_VERTICAL);
 
-        // Agregar vistas al contenedor
         resultadoItem.addView(iconoCheck);
         resultadoItem.addView(tvPrimerRegistro);
 
-        // Agregar al contenedor de resultados
         resultadosLayout.addView(resultadoItem);
     }
 }
+
