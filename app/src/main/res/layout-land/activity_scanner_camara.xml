@@ -5,7 +5,20 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="8dp"
-    android:background="#FFFFFF">
+    android:background="@drawable/background_gradient">
+
+    <!-- Icono Home en la parte superior derecha -->
+    <ImageView
+        android:id="@+id/btnHome"
+        android:layout_width="48dp"
+        android:layout_height="48dp"
+        android:padding="8dp"
+        android:src="@drawable/ic_home"
+        android:contentDescription="Ir a Home"
+        android:background="?attr/selectableItemBackgroundBorderless"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:layout_margin="8dp" />
 
     <!-- Guideline para dividir en dos columnas -->
     <androidx.constraintlayout.widget.Guideline
@@ -59,15 +72,7 @@
             android:padding="12dp"
             android:textColor="#000" />
 
-        <Button
-            android:id="@+id/btnVolver"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:backgroundTint="@android:color/holo_blue_light"
-            android:text="Volver"
-            android:textColor="@android:color/white"
-            android:layout_marginTop="16dp" />
-
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>
+

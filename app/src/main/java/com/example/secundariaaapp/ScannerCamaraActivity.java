@@ -20,6 +20,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.util.Log;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.google.common.util.concurrent.ListenableFuture;
@@ -88,8 +89,9 @@ public class ScannerCamaraActivity extends AppCompatActivity {
         previewView = findViewById(R.id.previewView);
         tvResult = findViewById(R.id.tvResult);
 
-        Button btnVolver = findViewById(R.id.btnVolver);
-        btnVolver.setOnClickListener(v -> finish());
+        ImageView btnHome = findViewById(R.id.btnHome);
+        btnHome.setOnClickListener(v -> finish());
+
 
 
         // pedir permiso si hace falta
